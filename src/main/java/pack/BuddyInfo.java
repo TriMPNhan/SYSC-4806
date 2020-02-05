@@ -11,6 +11,7 @@ public class BuddyInfo {
     private String addr;
     private String num;
 
+
     public  BuddyInfo(){
         name = "Default Bob";
         addr = "Default 123 Ave.";
