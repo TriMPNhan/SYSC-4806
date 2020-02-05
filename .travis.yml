@@ -1,3 +1,8 @@
 language: java
 jdk:
  - oraclejdk12
+ deploy:
+    provider: heroku
+    api-key:
+        secure: 6e8751b2-8913-4ce5-9cdd-1a3750588db1
+    app: addressbook11
