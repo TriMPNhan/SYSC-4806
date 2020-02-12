@@ -6,7 +6,9 @@
 </head>
 <body>
     <h1>Create Buddy</h1>
+    <p><strong>Address book:</strong></p>
     <hl th:text = "${addressBook.name}"></hl>
+    <p><strong>Buddy List</strong></p>
     <table>
         <tr th:each="bud : ${addressBook.getCollection()}">
             <td th:text="${bud.name}"></td>
@@ -14,8 +16,8 @@
     </table>
 
     <p><strong>Add Buddy Form</strong></p>
-    <form action="#" th:action="@{/Buddy}" th:object="${buddyInfo}" method="post">
-        <p> Address Book: <input type="text" name="addrName" /></p>
+    <form action="#" th:action="@{/AddBuddy}" th:object="${buddyInfo}" method="post">
+        <input type="hidden" th:value="${addressBook.name}" name="addrName" />
         <p>Name: <input type="text" th:field="*{name}" /></p>
         <p>Address: <input type="text" th:field="*{addr}" /></p>
         <p>phoneNumber: <input type="text" th:field="*{num}" /></p>
@@ -23,7 +25,8 @@
     </form>
 
     <p><strong>Delete Buddy Form</strong></p>
-    <form action="#" th:action="@{/Buddy}" method="delete">
+    <form action="#" th:action="@{/RemoveBuddy}" method="post">
+        <input type="hidden" th:value="${addressBook.name}" name="addrName" />
         <p>Name: <input type="text" name="name" /></p>
         <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
     </form>

@@ -26,8 +26,11 @@ public class AddressBookController {
 
     @PostMapping("/AddressBook")
     public String createBook(@RequestParam(name = "name") String name, Model model){
-        AddressBook book = new AddressBook(name);
-        repository.save(book);
+        if(repository.findByName(name).isEmpty()){
+            AddressBook book = new AddressBook(name);
+            repository.save(book);
+        }
+
         return displayBook(name, model);
     }
 
@@ -39,7 +42,7 @@ public class AddressBookController {
         return "showBuddies";
     }
 
-    @PostMapping("/Buddy")
+    @PostMapping("/AddBuddy")
     public String addBuddy(@RequestParam(name="addrName") String addrName, @ModelAttribute BuddyInfo buddyInfo, Model model) {
         AddressBook a = repository.findByName(addrName).get(0);
         a.addBuddy(buddyInfo);
@@ -48,10 +51,10 @@ public class AddressBookController {
 
     }
 
-    @DeleteMapping("/Buddy")
-    public String removeBuddy(@RequestParam(name="addrName") String addrName, int i, Model model) {
+    @PostMapping("/RemoveBuddy")
+    public String removeBuddy(@RequestParam(name="addrName") String addrName, @RequestParam(name="name") String name, Model model) {
         AddressBook a = repository.findByName(addrName).get(0);
-        a.removeBuddy(i);
+        a.removeBuddy(name);
         repository.save(a);
         return displayBook(addrName,model);
 

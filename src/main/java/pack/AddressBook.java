@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -17,7 +18,7 @@ public class AddressBook implements Serializable {
 
     private String name;
 
-    @OneToMany(cascade=CascadeType.ALL)
+    @OneToMany(cascade=CascadeType.MERGE, fetch= FetchType.EAGER)
     private List<BuddyInfo> collection;
 
     @Autowired
@@ -42,10 +43,22 @@ public class AddressBook implements Serializable {
         }
     }
 
-    public void removeBuddy(int i) {
+    public void removeBuddy(String name) {
+        int i = 0;
+        int r = -1;
 
-        if (i >= 0 && i < collection.size()) {
-            collection.remove(i);
+        Iterator<BuddyInfo> it = collection.iterator();
+        while(it.hasNext()){
+            if (it.next().getName().equals(name)){
+                r = i;
+            }
+            else{
+                i++;
+            }
+        }
+
+        if (r != -1){
+            collection.remove(r);
         }
     }
 

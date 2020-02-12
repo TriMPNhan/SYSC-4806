@@ -37,7 +37,7 @@ public class AddressBookTest {
 
     @Test
     public void testRemove() {
-        book.removeBuddy(0);
+        book.removeBuddy("Duncan");
         assertNotEquals("Duncan should be removed from list", Duncan, book.getBuddy(0));
     }
 
